@@ -56,12 +56,6 @@ rm -rf $RPM_BUILD_ROOT
 %post
 %service -q nagios restart
 
-%postun
-if [ "$1" = 0 ]; then
-	%service -q nagios restart
-fi
-
-
 %files
 %defattr(644,root,root,755)
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/livestatus-load.cfg
