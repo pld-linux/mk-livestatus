@@ -9,6 +9,7 @@ Source0:	https://mathias-kettner.de/download/%{name}-%{version}.tar.gz
 # Source0-md5:	a01b3cc372f5dbe672eee29afeb94dd5
 Patch0:		socket-path.patch
 URL:		http://mathias-kettner.de/checkmk_livestatus.html
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	nagios >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -51,6 +52,15 @@ echo 'broker_module=%{_libdir}/livestatus.o' \
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+%service -q nagios restart
+
+%postun
+if [ "$1" = 0 ]; then
+	%service -q nagios restart
+fi
+
 
 %files
 %defattr(644,root,root,755)
