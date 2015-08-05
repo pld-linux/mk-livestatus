@@ -7,6 +7,7 @@ Group:		Applications
 # Source0Download: https://mathias-kettner.de/check_mk_download_source.html
 Source0:	https://mathias-kettner.de/download/%{name}-%{version}.tar.gz
 # Source0-md5:	a01b3cc372f5dbe672eee29afeb94dd5
+Patch0:		socket-path.patch
 URL:		http://mathias-kettner.de/checkmk_livestatus.html
 Requires:	nagios >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -28,6 +29,7 @@ able retrieve historic data from the Nagios log files via Livestatus.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %configure \

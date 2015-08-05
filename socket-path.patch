@@ -1,0 +1,10 @@
+--- mk-livestatus-1.2.6p9/./src/livestatus.h~	2015-06-24 12:48:37.000000000 +0300
++++ mk-livestatus-1.2.6p9/./src/livestatus.h	2015-08-06 00:36:38.198382095 +0300
+@@ -25,6 +25,6 @@
+ #ifndef livestatus_h
+ #define livestatus_h
+ 
+-#define DEFAULT_SOCKET_PATH "/usr/local/nagios/var/rw/live"
++#define DEFAULT_SOCKET_PATH "/var/lib/nagios/rw/live"
+ 
+ #endif // livestatus_h
