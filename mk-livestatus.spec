@@ -8,6 +8,7 @@ Group:		Applications
 Source0:	https://mathias-kettner.de/download/%{name}-%{version}.tar.gz
 # Source0-md5:	a01b3cc372f5dbe672eee29afeb94dd5
 URL:		http://mathias-kettner.de/checkmk_livestatus.html
+Requires:	nagios >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/nagios
@@ -29,7 +30,8 @@ able retrieve historic data from the Nagios log files via Livestatus.
 %setup -q
 
 %build
-%configure
+%configure \
+	--with-nagios4
 %{__make}
 
 %install
