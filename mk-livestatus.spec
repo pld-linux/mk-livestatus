@@ -10,6 +10,9 @@ Source0:	https://mathias-kettner.de/download/%{name}-%{version}.tar.gz
 URL:		http://mathias-kettner.de/checkmk_livestatus.html
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		_sysconfdir	/etc/nagios
+%define		_libdir		%{_prefix}/%{_lib}/nagios
+
 %description
 Livestatus. Just as NDO, Livestatus make use of the Nagios Event
 Broker API and loads a binary module into your Nagios process. But
@@ -34,13 +37,19 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}
 
 %{__make} -j1 install \
+	pkglibdir=%{_libdir} \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# sample line that should be added to nagios.cfg for this module to work
+install -d $RPM_BUILD_ROOT%{_sysconfdir}
+echo 'broker_module=%{_libdir}/livestatus.o' \
+	> $RPM_BUILD_ROOT%{_sysconfdir}/livestatus-load.cfg
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/livestatus-load.cfg
 %attr(755,root,root) %{_bindir}/unixcat
-%dir %{_libdir}/%{name}
-%{_libdir}/%{name}/livestatus.o
+%attr(755,root,root) %{_libdir}/livestatus.o
