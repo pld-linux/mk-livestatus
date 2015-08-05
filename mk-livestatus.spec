@@ -1,12 +1,12 @@
 Summary:	Accessing Nagios status data
-#Summary(pl.UTF-8):
 Name:		mk-livestatus
-Version:	1.1.12
-Release:	0.1
-License:	unknown
+Version:	1.2.6p9
+Release:	1
+License:	GPL v2
 Group:		Applications
-Source0:	http://www.mathias-kettner.de/download/%{name}-%{version}.tar.gz
-# Source0-md5:	ddf1444874193316289d6c8cf71fa79d
+# Source0Download: https://mathias-kettner.de/check_mk_download_source.html
+Source0:	https://mathias-kettner.de/download/%{name}-%{version}.tar.gz
+# Source0-md5:	a01b3cc372f5dbe672eee29afeb94dd5
 URL:		http://mathias-kettner.de/checkmk_livestatus.html
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -33,7 +33,7 @@ able retrieve historic data from the Nagios log files via Livestatus.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}
 
-%{__make} install \
+%{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
@@ -43,5 +43,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/unixcat
 %dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/*.so
-%attr(755,root,root) %{_libdir}/%{name}/*.o
+%{_libdir}/%{name}/livestatus.o
