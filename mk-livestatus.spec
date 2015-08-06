@@ -47,8 +47,10 @@ install -d $RPM_BUILD_ROOT%{_libdir}
 
 # sample line that should be added to nagios.cfg for this module to work
 install -d $RPM_BUILD_ROOT%{_sysconfdir}
-echo 'broker_module=%{_libdir}/livestatus.o' \
-	> $RPM_BUILD_ROOT%{_sysconfdir}/livestatus-load.cfg
+cat <<EOF> $RPM_BUILD_ROOT%{_sysconfdir}/livestatus-load.cfg
+# Load Livestatus Module
+broker_module=%{_libdir}/livestatus.o event_broker_options=-1
+EOF
 
 %clean
 rm -rf $RPM_BUILD_ROOT
